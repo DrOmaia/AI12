@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23E0357A%22/><text x=%2250%22 y=%2266%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22monospace%22>ai</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="js/app.js"></script>
+<title>Certificate — AI12</title>
+<meta name="description" content="Your AI12 certificate of completion, unlocked after Day 12.">
+</head>
+<body class="cert-page">
+<main class="wrap page-top" id="main"></main>
+<script>
+AI12.renderTopbar("cert"); AI12.requireProfile();
+(function(){
+  const st = AI12.state, esc = AI12.esc, main = document.getElementById("main");
+  const finished = !!(st.days[12] && st.days[12].done);
+
+  if (!finished) {
+    const doneCount = Object.keys(st.days).filter(k => st.days[k] && st.days[k].done).length;
+    main.innerHTML = `<div class="panel locked-box">
+      <h1 style="font-size:2rem"><span aria-hidden="true">🔒</span> Certificate locked</h1>
+      <p>Your certificate unlocks when you complete Day 12: pass the final exam and tick every item in the Day 11 test tasks and the Day 12 Twin Pack tasks.</p>
+      <p class="muted">You have completed ${doneCount} of 12 days.</p>
+      <a class="btn btn-primary" href="index.html">Back to my journey</a>
+    </div>`;
+    AI12.renderFooter();
+    return;
+  }
+
+  // Completion date: stored once, then kept stable
+  if (!st.completedOn) { st.completedOn = AI12.today(); AI12.save(); }
+  const date = st.completedOn;
+  let pretty = date;
+  try { pretty = new Date(date + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }); } catch (e) {}
+
+  // Certificate ID: a short, non-secret fingerprint of name + date (FNV-1a, two passes)
+  function hash(s, seed) {
+    let h = seed >>> 0;
+    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+    return h.toString(16).toUpperCase().padStart(8, "0");
+  }
+  const raw = ((st.profile && st.profile.name) || "") + "|" + date;
+  const id = "AI12-" + hash(raw, 2166136261).slice(0, 4) + "-" + hash(raw, 3735928559).slice(0, 4);
+
+  const field = st.profile && st.profile.field ? `<p>${esc(st.profile.field)}</p>` : "";
+  const pack = [
+    "Voice profile / style skill",
+    "One task skill",
+    "Agent specification",
+    "Ten-case test report",
+    "One-page twin card",
+  ];
+  main.innerHTML = `
+    <div class="no-print">
+      <h1 style="font-size:2rem">Congratulations, ${esc(AI12.displayName())}.</h1>
+      <p class="muted">Check that your name looks right, then print or save as PDF. To change the name, edit your profile (icon in the top bar) and reload this page. Choose landscape A4 if your browser does not pick it automatically.</p>
+      <div class="btn-row"><button type="button" class="btn btn-primary" id="printBtn">Print or save as PDF</button> <a class="btn btn-soft" href="index.html">Back to my journey</a></div>
+    </div>
+    <section class="cert" aria-label="Certificate of completion">
+      <span class="cert-mark" aria-hidden="true">ai</span>
+      <div class="cert-kicker">Certificate of completion</div>
+      <p class="cert-title">AI12: AI for University Teaching</p>
+      <p>This certifies that</p>
+      <div class="cert-name">${esc(AI12.displayName())}</div>
+      ${field}
+      <p>completed the 12-day AI12 course on ${esc(pretty)}, passing the final exam and building a personal teaching assistant (a "digital teaching twin") for their own work.</p>
+      <div class="cert-pack">
+        <b>Twin Pack delivered</b>
+        <ul>${pack.map(p => `<li><span aria-hidden="true">✓</span> ${esc(p)}</li>`).join("")}</ul>
+      </div>
+      <div class="cert-meta"><span>Completed: ${esc(pretty)}</span><span>Certificate ID: <code>${id}</code></span></div>
+      <p class="muted" style="font-size:.8rem;margin:12px 0 0">Self-paced course. This certificate records course completion only. It is not an accredited qualification.</p>
+    </section>`;
+  document.getElementById("printBtn").onclick = () => window.print();
+  AI12.renderFooter();
+})();
+</script>
+</body></html>

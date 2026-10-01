@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23E0357A%22/><text x=%2250%22 y=%2266%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22monospace%22>ai</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="js/app.js"></script>
+<title>Twin Builder — AI12</title>
+<meta name="description" content="Build your Twin Pack: voice profile, task skill, agent spec, test report and twin card, from one form. Everything stays in your browser.">
+</head>
+<body>
+<main class="wrap page-top">
+  <h1>Twin Builder</h1>
+  <p class="muted narrow">Fill in the form and your Twin Pack appears on the right: voice skill, task skill, agent spec, test report template and twin card. Copy or download each item. Your text is saved in this browser only.</p>
+  <div class="callout saudi narrow"><div class="ttl">The rules of your twin</div>
+    <p>It is your personal teaching assistant. It is never student-facing, never grades, never acts alone, and it stays at autonomy level L1 or L2. Never put student personal data in this form. Check your university's policy on AI use and data.</p></div>
+  <div class="btn-row no-print" style="margin:10px 0 18px">
+    <button type="button" class="btn btn-primary" id="dlAll">Download the whole pack</button>
+    <button type="button" class="btn btn-ghost" id="clearTwin">Clear the form</button>
+  </div>
+  <div class="split">
+    <section aria-labelledby="formH"><h2 id="formH" class="twin-h">Your details</h2><div id="twinForm"></div></section>
+    <section aria-labelledby="outH"><h2 id="outH" class="twin-h">Your Twin Pack</h2><div id="twinOut"></div></section>
+  </div>
+</main>
+<script>AI12.renderTopbar("twin"); AI12.requireProfile();</script>
+<script src="js/twin.js"></script>
+<script>AI12.renderFooter();</script>
+</body></html>

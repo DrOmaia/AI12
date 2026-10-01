@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23E0357A%22/><text x=%2250%22 y=%2266%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22monospace%22>ai</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="js/app.js"></script>
+<title>My notes — AI12</title>
+<meta name="description" content="All your AI12 notes in one place, by day. Copy them or download as a text file.">
+</head>
+<body>
+<main class="wrap narrow page-top">
+  <h1>My notes</h1>
+  <p class="muted">Notes you write at the bottom of each lesson appear here. They are saved only in this browser. Edit them here or in the lesson.</p>
+  <div class="btn-row no-print" style="margin:12px 0 18px">
+    <button type="button" class="btn btn-primary" id="copyAll">Copy all</button>
+    <button type="button" class="btn btn-soft" id="dlAll">Download .txt</button>
+  </div>
+  <div id="list"></div>
+</main>
+<script src="js/curriculum.js"></script>
+<script>
+AI12.renderTopbar("notes"); AI12.requireProfile();
+(function () {
+  const esc = AI12.esc, st = AI12.state;
+  const list = document.getElementById("list");
+  const days = CURRICULUM.days;
+  list.innerHTML = days.map(d => `<div class="field note-day">
+      <label for="n${d.d}">Day ${d.d}: ${esc(d.title)}</label>
+      <textarea id="n${d.d}" data-d="${d.d}" rows="4" placeholder="No notes yet for this day."></textarea></div>`).join("");
+  list.querySelectorAll("textarea").forEach(t => {
+    t.value = st.notes[t.dataset.d] || "";
+    t.oninput = () => { st.notes[t.dataset.d] = t.value; AI12.save(); };
+  });
+  function allText() {
+    const parts = days.map(d => ({ d, t: (st.notes[d.d] || "").trim() })).filter(x => x.t)
+      .map(x => "Day " + x.d.d + ": " + x.d.title + "\n" + x.t);
+    if (!parts.length) return "";
+    return "AI12 notes: " + AI12.displayName() + "\n\n" + parts.join("\n\n---\n\n") + "\n";
+  }
+  document.getElementById("copyAll").onclick = () => { const t = allText(); t ? AI12.copy(t) : AI12.toast("You have no notes yet."); };
+  document.getElementById("dlAll").onclick = () => { const t = allText(); t ? AI12.download("ai12-notes.txt", t) : AI12.toast("You have no notes yet."); };
+})();
+AI12.renderFooter();
+</script>
+</body></html>

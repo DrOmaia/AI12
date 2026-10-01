@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23E0357A%22/><text x=%2250%22 y=%2266%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22monospace%22>ai</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="js/app.js"></script>
+<title>Skill Builder — AI12</title>
+<meta name="description" content="Turn a task you repeat into a reusable skill file (SKILL.md) or custom instructions for any AI tool.">
+</head>
+<body>
+<main class="wrap page-top">
+  <h1>Skill Builder</h1>
+  <p class="muted">A skill is a folder containing a <code>SKILL.md</code> file: a short header (name and description) followed by instructions in Markdown. Fill in the form to generate one. Nothing you type leaves your browser.</p>
+  <div class="callout"><div class="ttl">Before you download</div><div>The folder name must be exactly the same as the skill name. If your skill is called <code>feedback-drafter</code>, save the file as <code>feedback-drafter/SKILL.md</code>. Skill support differs by tool and plan: check your tool's help pages. If your tool has no skills, use the "Custom instructions" view and paste the text instead.</div></div>
+
+  <div class="builder">
+    <section class="panel" aria-labelledby="inTitle">
+      <h2 id="inTitle">1. Describe your skill</h2>
+      <div class="btn-row"><button type="button" class="btn btn-soft btn-sm" id="loadEx">Load an example</button> <button type="button" class="btn btn-ghost btn-sm" id="clearAll">Clear all</button></div>
+
+      <div class="field"><label for="s-name">Skill name</label>
+        <span class="help">Lowercase letters, digits and single hyphens. No hyphen at the start or end, no double hyphens, 64 characters at most. Example: <code>feedback-drafter</code></span>
+        <input id="s-name" maxlength="80" autocomplete="off" spellcheck="false" aria-describedby="m-name">
+        <div class="msg" id="m-name" aria-live="polite"></div></div>
+
+      <div class="field"><label for="s-desc">Description</label>
+        <span class="help">One or two sentences. Say <b>what</b> the skill does and <b>when</b> to use it (for example "Use when I ask for..."). The tool reads this to decide when to load the skill.</span>
+        <textarea id="s-desc" rows="4" aria-describedby="m-desc"></textarea>
+        <div class="count" id="c-desc"></div>
+        <div class="msg" id="m-desc" aria-live="polite"></div></div>
+
+      <div class="field"><label for="s-purpose">Purpose</label><span class="help">Why this skill exists and who uses its output.</span><textarea id="s-purpose" rows="3"></textarea></div>
+      <div class="field"><label for="s-steps">Steps</label><span class="help">One step per line. Numbers are added for you.</span><textarea id="s-steps" rows="5"></textarea></div>
+      <div class="field"><label for="s-format">Output format</label><span class="help">What the result must look like: sections, length, tone.</span><textarea id="s-format" rows="3"></textarea></div>
+      <div class="field"><label for="s-bounds">Boundaries</label><span class="help">What the skill must never do, and when it must stop and ask you.</span><textarea id="s-bounds" rows="4"></textarea>
+        <div class="btn-row" style="margin-top:6px"><button type="button" class="btn btn-ghost btn-sm" id="addRed">Add my teaching assistant's red lines</button></div></div>
+      <div class="field"><label for="s-ex">Examples (optional)</label><span class="help">One short input and the output you would accept.</span><textarea id="s-ex" rows="3"></textarea></div>
+    </section>
+
+    <div class="sticky">
+      <section class="panel" aria-labelledby="outTitle">
+        <h2 id="outTitle">2. Your skill</h2>
+        <div class="out-tabs" role="group" aria-label="Output view">
+          <button type="button" class="btn btn-soft btn-sm" id="tab-skill" aria-pressed="true">SKILL.md</button>
+          <button type="button" class="btn btn-soft btn-sm" id="tab-ci" aria-pressed="false">Custom instructions</button>
+        </div>
+        <p class="muted" id="viewNote" style="font-size:.88rem;margin:0"></p>
+        <div class="sk-out skill-out" id="out" role="region" aria-label="Generated output" tabindex="0"></div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" id="copyBtn">Copy</button>
+          <button type="button" class="btn btn-soft" id="dlBtn">Download SKILL.md</button>
+        </div>
+        <p class="muted" id="dlNote" style="font-size:.88rem;margin:10px 0 0"></p>
+        <p style="margin:12px 0 0"><b>After you generate it, check:</b> would the description alone tell the tool when to use this skill? Does the boundaries section include your red lines? Test it on a real task and review the output before use.</p>
+      </section>
+    </div>
+  </div>
+</main>
+<script src="js/skill.js"></script>
+<script>AI12.renderTopbar("skill"); AI12.requireProfile(); AI12.renderFooter();</script>
+</body></html>

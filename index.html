@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23E0357A%22/><text x=%2250%22 y=%2266%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22monospace%22>ai</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="js/app.js"></script>
+<title>AI12 — AI for university teaching in 12 days</title>
+<meta name="description" content="A free 12-day course for university faculty: prompt engineering, AI in teaching and assessment, skills, agents and your own personal teaching assistant.">
+</head>
+<body>
+<main class="wrap">
+  <section class="hero" id="hero"></section>
+  <section id="map"></section>
+  <section>
+    <h2 id="toolsTitle"></h2>
+    <div class="tools" id="tools"></div>
+  </section>
+</main>
+<script src="js/curriculum.js"></script>
+<script>
+AI12.renderTopbar("home"); AI12.requireProfile();
+(function(){
+  const st = AI12.state, esc = AI12.esc;
+  const C = CURRICULUM, N = C.days.length;
+  const doneDays = C.days.filter(d => st.days[d.d] && st.days[d.d].done).map(d => d.d);
+  const current = C.days.find(d => !(st.days[d.d] && st.days[d.d].done)) || C.days[N - 1];
+  const finished = !!(st.days[N] && st.days[N].done);
+  const quizzes = Object.values(st.days).filter(d => d.quiz && d.quiz.total);
+  const avg = quizzes.length ? Math.round(100 * quizzes.reduce((a, d) => a + d.quiz.score / d.quiz.total, 0) / quizzes.length) + "%" : "—";
+  const streak = st.streak && (st.streak.last === AI12.today() || st.streak.last === AI12.addDays(AI12.today(), -1)) ? st.streak.count : 0;
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+  const name = esc(AI12.displayName());
+  const ask = finished ? "What should my teaching assistant draft next?" : "Teach me Day " + current.d + ", step by step.";
+  document.getElementById("hero").innerHTML = `
+    <h1>${greet}, ${name}.</h1>
+    <div class="hero-line" aria-label="A prompt greeting you"><span class="c"># role: your teaching assistant</span><br><span class="k">ask</span><span class="p">(</span><span class="s">"${esc(ask)}"</span><span class="p">)</span><span class="caret" aria-hidden="true"></span></div>
+    <div class="hero-grid">
+      <div class="panel">
+        <h3 style="margin-bottom:6px">${finished ? "You finished AI12 🎓" : "Next up: Day " + current.d}</h3>
+        <p style="font-size:1.1rem;margin-bottom:12px">${finished ? "All 12 days done. Your certificate is ready." : esc(current.title)}</p>
+        ${finished ? `<a class="btn btn-primary" href="certificate.html">🎓 View my certificate</a> <a class="btn btn-soft" href="review.html">Keep reviewing</a>` : `<a class="btn btn-primary" href="lesson.html?day=${current.d}">${st.days[current.d] && st.days[current.d].visited ? "Continue" : "Start"} Day ${current.d}</a>`}
+        <p class="muted" style="margin:12px 0 0">${AI12.T("Your plan: one day at a time, 30–45 minutes. Every day ends with a short quiz and review cards. The last two days are your own project.")}</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="v">${doneDays.length}</div><div class="l">days done of ${N}</div></div>
+        <div class="stat"><div class="v">${avg}</div><div class="l">quiz average</div></div>
+        <div class="stat"><div class="v">${streak}</div><div class="l">day streak</div></div>
+      </div>
+    </div>`;
+
+  document.getElementById("map").innerHTML = `<h2>Your 12-day journey</h2>` + C.phases.map(p => {
+    const days = C.days.filter(d => d.p === p.n);
+    return `<div class="week"><div class="week-head"><h3>${esc(p.title)}</h3><a class="muted" href="cheatsheet.html?phase=${p.n}" style="font-size:.88rem">Cheat sheet</a></div>
+      <div class="days">${days.map(d => {
+        const ds = st.days[d.d] || {};
+        const cls = ["day", d.type, ds.done ? "done" : "", d.d === current.d && !finished ? "current" : ""].join(" ");
+        const status = ds.done ? "✓ Done" : ds.visited ? "In progress" : "";
+        return `<a class="${cls}" href="lesson.html?day=${d.d}"><span class="dn">Day ${d.d}</span><span class="dt">${esc(d.title)}</span><span class="ds">${status}</span></a>`;
+      }).join("")}</div></div>`;
+  }).join("");
+
+  document.getElementById("toolsTitle").textContent = "Your toolbox";
+  const tools = [
+    ["lab.html", "Prompt Lab", "Build a prompt part by part, check its quality, copy it into any AI tool."],
+    ["skill.html", "Skill Builder", "Turn a task you repeat into a reusable skill file (SKILL.md) or custom instructions."],
+    ["twin.html", "Twin Builder", "Generate your Twin Pack: voice skill, task skill, agent spec, test report, twin card."],
+    ["review.html", "Review deck", "Spaced-repetition cards from the days you studied."],
+    ["glossary.html", "Glossary", "Every key term with a plain definition and why it matters to you."],
+    ["cheatsheet.html?phase=1", "Cheat sheets", "One printable page per phase."],
+    ["notes.html", "My notes", "Everything you wrote, day by day."],
+    ["certificate.html", "Certificate", "Your personal certificate, unlocked after Day 12."],
+    ["setup.html", "Setup and help", "Get the three tools ready, privacy settings, back up your progress."],
+  ];
+  document.getElementById("tools").innerHTML = tools.map(([href, b, s]) => `<a class="tool" href="${href}"><b>${esc(b)}</b><span>${esc(s)}</span></a>`).join("");
+  if (AI12.REPO_URL) document.getElementById("tools").insertAdjacentHTML("beforeend", `<a class="tool" href="${AI12.REPO_URL}" target="_blank" rel="noopener"><b>${AI12.STAR_SVG} Star AI12 on GitHub</b><span>A star helps other colleagues find the course.</span></a>`);
+})();
+AI12.renderFooter();
+</script>
+</body></html>

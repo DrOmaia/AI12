@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23E0357A%22/><text x=%2250%22 y=%2266%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22monospace%22>ai</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="js/app.js"></script>
+<title>Setup and help — AI12</title>
+<meta name="description" content="Get Gemini, ChatGPT and Claude ready, check privacy settings, and back up or reset your AI12 progress.">
+</head>
+<body>
+<main class="wrap narrow page-top" id="main">
+  <h1>Setup and help</h1>
+  <p class="muted">Everything you need before and during the course. Nothing here is required on Day 1, so come back when you need it.</p>
+  <nav class="setup-nav" aria-label="On this page">
+    <a href="#tools">Get the tools</a>
+    <a href="#privacy">Privacy checks</a>
+    <a href="#backup">Back up progress</a>
+    <a href="#reset">Reset</a>
+    <a href="#trouble">Troubleshooting</a>
+  </nav>
+
+  <section class="setup-sec" id="tools">
+    <h2>1. Get the three tools ready</h2>
+    <p>The course teaches principles that work in any assistant. You need access to at least one of these three, and it is useful to try two so you can compare answers.</p>
+    <ul>
+      <li><b>Gemini</b>: sign in with a Google account.</li>
+      <li><b>ChatGPT</b>: sign in with an email, Google or Apple account.</li>
+      <li><b>Claude</b>: sign in with an email or Google account.</li>
+    </ul>
+    <p>Free accounts are enough for most of the course. Some features used on Days 8 to 11 (projects, custom assistants, skills, agent modes, file uploads) differ by tool and plan. Where a feature is missing, the lesson gives a fallback, usually pasting the text as standing instructions at the start of a chat.</p>
+    <div class="callout tip"><div class="ttl">Before you start</div>
+      <ul>
+        <li>Use a personal or university account you are allowed to use for this purpose. Check your university's policy on which AI tools are approved.</li>
+        <li>Open each tool once and send a harmless test message, such as "Explain what a learning outcome is in two sentences."</li>
+        <li>Find where each tool keeps its settings, help pages and the "new chat" button. You will use them every day.</li>
+      </ul>
+    </div>
+    <p class="muted">Feature names, limits and prices change often. When this course and a tool disagree, trust your tool's help pages.</p>
+  </section>
+
+  <section class="setup-sec" id="privacy">
+    <h2>2. Privacy and data settings to check</h2>
+    <p>Do this once for each tool, then again whenever you change plan or account. The names of the settings differ, so look for the ideas below and check your tool's help pages for the exact wording.</p>
+    <div class="table-wrap"><table class="gl">
+      <thead><tr><th scope="col">What to look for</th><th scope="col">Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td>Whether your chats may be used to improve the provider's models, and how to turn that off</td><td>Defaults differ between tools and plans. Decide on purpose rather than by default.</td></tr>
+        <tr><td>Chat history, memory and saved personal context</td><td>The tool may remember details about you or your courses. Know where to view and delete them.</td></tr>
+        <tr><td>How long deleted chats and uploaded files are kept</td><td>Deleting in the app may not mean instant removal. Read the provider's data-retention notes.</td></tr>
+        <tr><td>Sharing links and shared projects</td><td>Anyone with a link may be able to read a shared chat. Share only what you would be happy to show others.</td></tr>
+        <tr><td>Connected apps, extensions and file access</td><td>Each connection widens what the tool can see. Keep only what you use.</td></tr>
+        <tr><td>Institutional or education plans</td><td>Your university may offer an approved version with different data terms. Ask your IT or digital-transformation office.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout saudi"><div class="ttl">Saudi context</div>
+      <p>Student records, grades, national ID numbers and similar personal data should not go into a public AI tool. Saudi personal-data rules (PDPL) and your university's own policies apply, so check your university's policy and ask your data-protection or IT contact if unsure. This page is general guidance, not legal advice.</p>
+    </div>
+    <div class="callout warn"><div class="ttl">Red line for this course</div>
+      <p>Your teaching assistant never handles student personal data, never assigns grades and never sends anything on its own. Use your own course materials and anonymised or invented examples.</p>
+    </div>
+  </section>
+
+  <section class="setup-sec" id="backup">
+    <h2>3. Back up your progress</h2>
+    <p>AI12 saves your progress, notes and profile in <b>this browser on this device only</b>. Nothing is sent anywhere. That is good for privacy, but it means clearing your browser data, using a private window, or switching device will lose your progress. Download a backup file from time to time, and keep it somewhere you control.</p>
+    <p class="muted">The backup contains your name and notes. Treat the file as personal.</p>
+    <div class="btn-row">
+      <button type="button" class="btn btn-primary" id="exportBtn">Download backup (JSON)</button>
+      <label class="btn btn-soft" for="importFile" id="importLbl" style="cursor:pointer">Restore from backup file</label>
+      <input type="file" id="importFile" accept=".json,application/json" style="position:absolute;opacity:0;width:1px;height:1px">
+    </div>
+    <p id="backupMsg" role="status" class="muted" style="margin-top:10px"></p>
+    <p class="muted">To move to another device: download the backup here, open AI12 on the other device, then restore the file on this page. Restoring replaces the progress currently stored in that browser.</p>
+  </section>
+
+  <section class="setup-sec" id="reset">
+    <h2>4. Reset the course</h2>
+    <p>This deletes your profile, answers, notes, review cards and progress from this browser. It cannot be undone, so download a backup first if you might want anything back.</p>
+    <button type="button" class="btn btn-ghost" id="resetBtn">Delete all my progress</button>
+  </section>
+
+  <section class="setup-sec" id="trouble">
+    <h2>5. Troubleshooting</h2>
+    <ul>
+      <li><b>My progress disappeared.</b> You may be in a private window, using another browser, or have cleared site data. Restore from your backup file.</li>
+      <li><b>The Copy button does nothing.</b> Select the text by hand and copy it. Some browsers block copying on pages opened from a local file.</li>
+      <li><b>The page looks wrong or old.</b> Refresh the page with Ctrl+F5 (Cmd+Shift+R on Mac).</li>
+      <li><b>My name is wrong on the certificate.</b> Click the icon at the top right, edit your profile, save, and reload the certificate page.</li>
+      <li><b>A tool says a feature is unavailable.</b> It may depend on your plan or country. Use the fallback in the lesson and check your tool's help pages.</li>
+    </ul>
+    <p><a href="index.html">Back to my journey</a></p>
+  </section>
+</main>
+<script>
+AI12.renderTopbar("home");
+(function(){
+  const msg = document.getElementById("backupMsg");
+  const say = (t, bad) => { msg.textContent = t; msg.style.color = bad ? "var(--err)" : ""; msg.style.fontWeight = bad ? "700" : ""; };
+  document.getElementById("exportBtn").onclick = () => {
+    AI12.download("ai12-backup-" + AI12.today() + ".json", AI12.exportData(), "application/json");
+    say("Backup downloaded. Keep the file somewhere safe.");
+  };
+  document.getElementById("importFile").onchange = e => {
+    const f = e.target.files && e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        if (!confirm("Replace the progress in this browser with the backup file?")) { say("Restore cancelled."); return; }
+        AI12.importData(String(r.result));
+        say("Backup restored. Reloading…");
+        setTimeout(() => location.reload(), 700);
+      } catch (err) { say("That file could not be read. Choose a backup file downloaded from AI12.", true); }
+    };
+    r.onerror = () => say("The file could not be opened.", true);
+    r.readAsText(f);
+    e.target.value = "";
+  };
+  document.getElementById("importFile").addEventListener("focus", () => document.getElementById("importLbl").style.outline = "3px solid var(--pink-2)");
+  document.getElementById("importFile").addEventListener("blur", () => document.getElementById("importLbl").style.outline = "");
+  document.getElementById("resetBtn").onclick = () => AI12.reset();
+})();
+AI12.renderFooter();
+</script>
+</body></html>

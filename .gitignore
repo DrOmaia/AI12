@@ -1,0 +1,7 @@
+# Development-only files stay on the author's PC and are never published
+.claude/
+tools/
+CLAUDE.md
+START-HERE.md
+node_modules/
+*.zip

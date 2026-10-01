@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23E0357A%22/><text x=%2250%22 y=%2266%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22monospace%22>ai</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="js/app.js"></script>
+<title>Prompt Lab — AI12</title>
+<meta name="description" content="Build a prompt part by part, check its quality, and copy it into Gemini, ChatGPT or Claude.">
+</head>
+<body>
+<main class="wrap page-top">
+  <h1>Prompt Lab</h1>
+  <p class="muted">Fill in the parts you need. The checklist updates as you type, and the preview shows your finished prompt. Nothing you type here leaves your browser.</p>
+
+  <div class="builder">
+    <section class="panel" aria-labelledby="inTitle">
+      <h2 id="inTitle">1. Write your prompt</h2>
+      <div class="btn-row"><button type="button" class="btn btn-soft btn-sm" id="loadEx">Load an example</button> <button type="button" class="btn btn-ghost btn-sm" id="clearAll">Clear all</button></div>
+      <div class="field"><label for="f-role">Role</label><span class="help">Who should the AI act as? Example: an experienced curriculum designer.</span><textarea id="f-role" rows="2"></textarea></div>
+      <div class="field"><label for="f-context">Context</label><span class="help">Course, level, audience, and what the AI needs to know. Do not paste student names or personal data.</span><textarea id="f-context" rows="3"></textarea></div>
+      <div class="field"><label for="f-task">Task</label><span class="help">Start with a clear verb: draft, summarise, compare, rewrite, list.</span><textarea id="f-task" rows="3"></textarea></div>
+      <div class="field"><label for="f-constraints">Constraints</label><span class="help">Length, tone, what to include or avoid, what to do when unsure.</span><textarea id="f-constraints" rows="3"></textarea></div>
+      <div class="field"><label for="f-format">Output format</label><span class="help">Table, numbered steps, 150 words, two paragraphs, and so on.</span><textarea id="f-format" rows="2"></textarea></div>
+      <div class="field"><label for="f-examples">Examples (optional)</label><span class="help">One short sample of the style or output you want.</span><textarea id="f-examples" rows="3"></textarea></div>
+    </section>
+
+    <div class="sticky">
+      <section class="panel" aria-labelledby="qTitle">
+        <h2 id="qTitle">2. Quality checklist</h2>
+        <ul class="chk" id="chk" aria-live="polite"></ul>
+        <p class="muted" id="score" style="margin:10px 0 0"></p>
+      </section>
+      <section class="panel" aria-labelledby="pvTitle" style="margin-top:18px">
+        <h2 id="pvTitle">3. Preview and use</h2>
+        <div class="pv" id="pv" role="region" aria-label="Prompt preview"></div>
+        <p class="muted" style="font-size:.88rem">Yellow text in [square brackets] is a placeholder: replace it with your own detail before you send. Red-shaded words are vague.</p>
+        <div class="btn-row" id="actions">
+          <button type="button" class="btn btn-primary" id="copyBtn">Copy prompt</button>
+        </div>
+        <p class="muted" style="font-size:.88rem;margin:10px 0 0">The Open buttons copy your prompt first, then open the tool in a new tab. Paste it there.</p>
+        <p style="margin:12px 0 0"><b>After you run it, check:</b> are facts and references real, is the voice yours, and did it follow every constraint? Review before you use any output.</p>
+      </section>
+    </div>
+  </div>
+</main>
+<script src="js/ui.js"></script>
+<script src="js/lab.js"></script>
+<script>AI12.renderTopbar("lab"); AI12.requireProfile(); AI12.renderFooter();</script>
+</body></html>
